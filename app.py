@@ -42,16 +42,39 @@ st.markdown("""
             align-items: center;
             gap: 10px;
         }
+        .sidebar-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+        .sidebar-sub {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        .suggested {
+            font-size: 0.85em;
+            color: #444;
+            margin-top: 1rem;
+        }
     </style>
 """, unsafe_allow_html=True)
 
 # Sidebar with ClarifAI info
 with st.sidebar:
-    st.image("https://img.icons8.com/fluency/96/000000/chatbot.png", width=80)
-    st.markdown("### 🤖 ClarifAI")
-    st.markdown("A simple, local FAQ assistant powered by mock embeddings and FAISS.")
-    st.markdown("**Try asking:**\n- How do I reset my password?\n- What is your return policy?")
-    st.markdown("🔐 *Note: This is running offline with mock embeddings.*")
+    st.image("https://img.icons8.com/fluency/96/000000/chatbot.png", width=120)
+    st.markdown("<div class='sidebar-title'>ClarifAI</div>", unsafe_allow_html=True)
+    st.markdown("<div class='sidebar-sub'>An AI-powered FAQ assistant using FAISS and mock embeddings.</div>", unsafe_allow_html=True)
+    st.markdown("""
+    <div class='suggested'>
+        <strong>Try asking:</strong><br>
+        • How do I reset my password?<br>
+        • What is your return policy?
+    </div>
+    <div class='sidebar-sub' style='margin-top: 1rem;'>
+        🔐 This app runs offline using mock data.
+    </div>
+    """, unsafe_allow_html=True)
 
 # Store chat history
 if "chat_history" not in st.session_state:
@@ -72,6 +95,9 @@ if submitted and user_input:
     response = generate_response(user_input, match)
     st.session_state.chat_history.append(("You", user_input))
     st.session_state.chat_history.append(("ClarifAI", response, match["question"]))
+
+    # ✅ Clear the input field
+    st.session_state["input"] = ""
 
 # Display chat history using styled bubbles
 for entry in st.session_state.chat_history:
