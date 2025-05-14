@@ -80,6 +80,11 @@ with st.sidebar:
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
+# Reset input field if flagged
+if st.session_state.get("reset_input"):
+    st.session_state["input"] = ""
+    st.session_state["reset_input"] = False
+
 # Header
 st.title("💬 ClarifAI")
 st.caption("Ask a question from the FAQ. I'll find the best match!")
@@ -96,8 +101,9 @@ if submitted and user_input:
     st.session_state.chat_history.append(("You", user_input))
     st.session_state.chat_history.append(("ClarifAI", response, match["question"]))
 
-    # ✅ Clear the input field
-    st.session_state["input"] = ""
+    # ✅ Set reset flag and rerun
+    st.session_state["reset_input"] = True
+    st.rerun()
 
 # Display chat history using styled bubbles
 for entry in st.session_state.chat_history:
