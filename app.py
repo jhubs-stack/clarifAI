@@ -1,20 +1,20 @@
 import streamlit as st
 from backend import load_index, search_faq, generate_response
+import os
 
-# Load FAISS index and FAQs
+# Load ClarifAI's memory (index + faqs)
 index, faqs = load_index()
 
-# Page settings
 st.set_page_config(
     page_title="ClarifAI FAQ Assistant",
-    page_icon="💬",
+    page_icon="🤖",
     layout="centered"
 )
 
-# Inject custom CSS
+# Inject custom CSS for a modern look
 st.markdown("""
     <style>
-        html, body, [class*="css"] {
+        html, body, [class*="css"]  {
             font-family: 'Segoe UI', sans-serif;
         }
         .chat-bubble {
@@ -25,17 +25,22 @@ st.markdown("""
             max-width: 80%;
         }
         .user-msg {
-            background-color: #e0f0ff;
+            background-color: #DCF8C6;
             margin-left: auto;
             text-align: right;
         }
         .bot-msg {
-            background-color: #f0f0f0;
+            background-color: #F1F0F0;
             margin-right: auto;
         }
         .source {
             font-size: 0.85em;
             color: #888;
+        }
+        .input-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -48,30 +53,54 @@ with st.sidebar:
     st.markdown("**Try asking:**\n- How do I reset my password?\n- What is your return policy?")
     st.markdown("🔐 *Note: This is running offline with mock embeddings.*")
 
-# Main app layout
-st.title("💬 ClarifAI")
-st.caption("Ask a question from the FAQ. I'll find the best match!")
-
 # Store chat history
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-# Input box
-user_input = st.text_input("Type your question", placeholder="e.g. Can I return an item?", key="input")
+# Header
+st.title("💬 ClarifAI")
+st.caption("Ask a question from the FAQ. I'll find the best match!")
 
-# Handle input
-if user_input:
+# Text input and Send button
+with st.form(key="chat_form"):
+    user_input = st.text_input("Your question", placeholder="e.g. Can I return an item?", key="input")
+    submitted = st.form_submit_button("Send")
+
+# Handle user message
+if submitted and user_input:
     match = search_faq(user_input, index, faqs)
     response = generate_response(user_input, match)
-
-    # Add to history
     st.session_state.chat_history.append(("You", user_input))
     st.session_state.chat_history.append(("ClarifAI", response, match["question"]))
 
-# Display conversation
+# Display chat history using styled bubbles
 for entry in st.session_state.chat_history:
-    if entry[0] == "You":
-        st.markdown(f"<div class='chat-bubble user-msg'>{entry[1]}</div>", unsafe_allow_html=True)
-    else:
-        st.markdown(f"<div class='chat-bubble bot-msg'>{entry[1]}</div>", unsafe_allow_html=True)
-        st.markdown(f"<div class='source'>📌 Matched FAQ: {entry[2]}</div>", unsafe_allow_html=True)
+    speaker = entry[0]
+    message = entry[1]
+    source = entry[2] if len(entry) > 2 else None
+
+    is_user = speaker == "You"
+    avatar = "🧑" if is_user else "🤖"
+    alignment = "flex-end" if is_user else "flex-start"
+    bubble_color = "#DCF8C6" if is_user else "#F1F0F0"
+    text_align = "right" if is_user else "left"
+
+    st.markdown(f"""
+    <div style="display: flex; justify-content: {alignment}; margin-bottom: 10px;">
+        <div style="
+            background-color: {bubble_color};
+            padding: 10px 15px;
+            border-radius: 12px;
+            max-width: 75%;
+            text-align: {text_align};
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            font-size: 1rem;
+        ">
+            <div style="font-size: 1.2rem;">{avatar}</div>
+            <div>{message}</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    if source:
+        st.markdown(f"<div style='font-size:0.8em; color:gray; text-align:{text_align}; margin-bottom: 20px;'>📌 Matched FAQ: {source}</div>", unsafe_allow_html=True)
