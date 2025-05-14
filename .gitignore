@@ -1,0 +1,15 @@
+# Python virtual environment
+venv/
+
+# Byte-compiled / cached files
+__pycache__/
+*.py[cod]
+
+# Environment variable files
+.env
+
+# FAISS vector index (can be rebuilt)
+vectorstore/
+
+# OS system files
+.DS_Store
