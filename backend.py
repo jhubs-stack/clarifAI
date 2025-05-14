@@ -32,8 +32,17 @@ def build_index():
 
 # Load the saved index and FAQ data
 def load_index():
-    with open("vectorstore/faiss_index.pkl", "rb") as f:
+    index_path = "vectorstore/faiss_index.pkl"
+
+    # If index file doesn't exist, build it
+    if not os.path.exists(index_path):
+        os.makedirs("vectorstore", exist_ok=True)
+        build_index()
+
+    # Load index
+    with open(index_path, "rb") as f:
         index, faqs = pickle.load(f)
+
     return index, faqs
 
 # Search the closest FAQ for a given query
