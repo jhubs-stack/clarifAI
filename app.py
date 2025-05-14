@@ -12,7 +12,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# Sidebar with ClarifAI info
+# Sidebar
 with st.sidebar:
     st.image("https://img.icons8.com/fluency/96/000000/chatbot.png", width=120)
     st.markdown("## ClarifAI")
@@ -34,25 +34,81 @@ if st.session_state.get("reset_input"):
     st.session_state["input"] = ""
     st.session_state["reset_input"] = False
 
-# Main container for input and chat
+# Main container for chat interface
 st.markdown("""
-<div style="max-width: 700px; margin: auto;">
+<style>
+    .chat-container {
+        max-width: 800px;
+        margin: auto;
+        padding: 1rem;
+    }
+    .chat-bubble {
+        padding: 16px;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        font-size: 1rem;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .chat-user {
+        background-color: #f7f7f8;
+    }
+    .chat-bot {
+        background-color: #ffffff;
+    }
+    .chat-row {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        margin-bottom: 16px;
+    }
+    .chat-avatar {
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        object-fit: cover;
+    }
+</style>
+<div class="chat-container">
 """, unsafe_allow_html=True)
 
-# Header
-st.title("💬 ClarifAI")
-st.caption("Ask a question from the FAQ. I'll find the best match!")
+# Display chat history
+for entry in st.session_state.chat_history:
+    speaker = entry[0]
+    message = entry[1]
+    source = entry[2] if len(entry) > 2 else None
 
-# Text input and Send button
-with st.form(key="chat_form"):
-    user_input = st.text_input("Your question", placeholder="e.g. Can I return an item?", key="input", label_visibility="collapsed")
-    submitted = st.form_submit_button("Send")
+    avatar_url = (
+        "https://img.icons8.com/fluency/48/chatbot.png"
+        if speaker == "ClarifAI"
+        else "https://img.icons8.com/ios-filled/50/000000/user.png"
+    )
+    bubble_class = "chat-bot" if speaker == "ClarifAI" else "chat-user"
 
-# Handle user message
-if submitted and user_input:
+    st.markdown(f"""
+    <div class="chat-row">
+        <img src="{avatar_url}" class="chat-avatar">
+        <div class="chat-bubble {bubble_class}" style="max-width: 700px;">
+            <strong>{speaker}</strong><br>
+            {message}
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    if source and speaker == "ClarifAI":
+        st.markdown(f"<div style='margin-left: 44px; font-size: 0.85em; color: #888;'>📌 Matched FAQ: {source}</div>", unsafe_allow_html=True)
+
+st.markdown("</div>", unsafe_allow_html=True)
+
+# Input box
+with st.form(key="chat_input_form"):
+    st.markdown("""<div style='max-width: 800px; margin: auto;'>""", unsafe_allow_html=True)
+    user_input = st.text_input("Your question", key="input", label_visibility="collapsed", placeholder="e.g. Can I return an item?")
+    st.form_submit_button("Send")
+    st.markdown("</div>", unsafe_allow_html=True)
+
+# Handle submission
+if user_input:
     match = search_faq(user_input, index, faqs)
-
-    # Typing animation placeholder
     with st.spinner("ClarifAI is typing..."):
         time.sleep(1.2)
         response = generate_response(user_input, match)
@@ -62,52 +118,7 @@ if submitted and user_input:
     st.session_state["reset_input"] = True
     st.rerun()
 
-# Display chat history
-for entry in st.session_state.chat_history:
-    speaker = entry[0]
-    message = entry[1]
-    source = entry[2] if len(entry) > 2 else None
-
-    if speaker == "You":
-        st.markdown(f"""
-        <div style="clear: both;">
-            <div style="
-                float: right;
-                background-color: #DCF8C6;
-                padding: 14px 18px;
-                border-radius: 10px;
-                max-width: 100%;
-                text-align: left;
-                margin: 10px 0;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            ">
-                {message}
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-    else:
-        st.markdown(f"""
-        <div style="clear: both;">
-            <div style="
-                float: left;
-                background-color: #F1F0F0;
-                padding: 14px 18px;
-                border-radius: 10px;
-                max-width: 100%;
-                text-align: left;
-                margin: 10px 0;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            ">
-                {message}
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-        if source:
-            st.markdown(f"<div style='clear: both; font-size: 0.85em; color: #888; margin: 4px 0 12px;'>📌 Matched FAQ: {source}</div>", unsafe_allow_html=True)
-
-st.markdown("""</div>""", unsafe_allow_html=True)
-
-# Auto-scroll to bottom
+# Auto-scroll
 st.components.v1.html("""
 <script>
     const anchor = window.parent.document.querySelector("iframe").contentWindow.document.body;
