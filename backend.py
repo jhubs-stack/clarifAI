@@ -32,7 +32,21 @@ def build_index():
     print("✅ Mock index built and saved to vectorstore/faiss_index.pkl")
 
 if __name__ == "__main__":
+    # Uncomment this if you still want to regenerate the index
     build_index()
+
+    index, faqs = load_index()
+    print("🤖 ClarifAI is ready. Ask me a question!")
+
+    while True:
+        user_input = input("\nYou: ").strip()
+        if user_input.lower() in ["exit", "quit"]:
+            print("Goodbye!")
+            break
+
+        match = search_faq(user_input, index, faqs)
+        response = generate_response(user_input, match)
+        print(response)
 
 # Load the FAISS index and FAQs from disk
 def load_index():
