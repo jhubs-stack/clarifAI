@@ -26,5 +26,5 @@ ClarifAI is a lightweight, local-first AI-powered FAQ assistant. It uses mock em
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/jhubsche/clarifAI.git
+git clone https://github.com/jhubs-stack/clarifAI.git
 cd clarifAI
