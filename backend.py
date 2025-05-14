@@ -33,3 +33,26 @@ def build_index():
 
 if __name__ == "__main__":
     build_index()
+
+# Load the FAISS index and FAQs from disk
+def load_index():
+    with open("vectorstore/faiss_index.pkl", "rb") as f:
+        index, faqs = pickle.load(f)
+    return index, faqs
+
+# Search the best-matching FAQ given a user query
+def search_faq(query, index, faqs, k=1):
+    query_embedding = get_embedding(query)
+    query_vector = np.array([query_embedding], dtype="float32")
+    distances, indices = index.search(query_vector, k)
+    best_match_idx = indices[0][0]
+    return faqs[best_match_idx]
+
+# Generate a friendly response based on the best match
+def generate_response(user_question, matched_faq):
+    return f"""
+🤖 ClarifAI says:
+{matched_faq['answer']}
+
+📌 (Matched FAQ: {matched_faq['question']})
+"""
