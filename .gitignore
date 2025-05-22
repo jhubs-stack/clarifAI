@@ -1,22 +1,19 @@
-# ─── PYTHON BACKEND ──────────────────────────────────────────────
-venv/                          # Python virtual environment
-__pycache__/                   # Compiled Python files
-*.py[cod]                      # Compiled Python bytecode
-.env                           # Environment variables
-vectorstore/                   # FAISS index (rebuildable)
-*.log                          # Log files
+# Ignore Python bytecode and cache
+*.pyc
+__pycache__/
 
-# ─── FRONTEND (React + Vite + Tailwind) ─────────────────────────
-frontend/node_modules/         # npm dependencies
-frontend/dist/                 # Vite build output
-frontend/.next/                # Next.js output (if used)
-frontend/.env*                 # Frontend env files
+# Ignore FAISS index and pickle files
+*.pkl
 
-# ─── OS & SYSTEM FILES ──────────────────────────────────────────
-.DS_Store                      # macOS Finder metadata
-Thumbs.db                      # Windows thumbnail cache
+# Ignore virtual environments
+venv/
+backend/venv/
 
-# ─── IDE / EDITOR FILES ─────────────────────────────────────────
-.vscode/                       # VS Code settings
-.idea/                         # JetBrains IDEs (WebStorm, PyCharm, etc.)
-*.swp                          # Vim swap files
+# Ignore node modules
+node_modules/
+
+# Ignore system files
+.DS_Store
+
+# Ignore secrets
+.env

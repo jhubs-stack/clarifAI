@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 
 const products = [
@@ -20,6 +20,68 @@ const products = [
 ];
 
 export default function App() {
+  const [showChat, setShowChat] = useState(false);
+  const [messages, setMessages] = useState([
+    {
+      role: "assistant",
+      content: "Hi, I'm Frankie! How can I help you today?",
+    },
+  ]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const messagesEndRef = useRef(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+
+    const userMessage = { role: "user", content: input };
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
+    setLoading(true);
+
+    try {
+      console.log("📨 Sending to backend:", input);
+
+      const res = await fetch("http://localhost:8000/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: input }),
+      });
+
+      const data = await res.json();
+
+      console.log("📥 Received from backend:", data);
+
+      const botMessage = { role: "assistant", content: data.response };
+      setMessages((prev) => [...prev, botMessage]);
+    } catch (err) {
+      console.error("❌ Error in fetch:", err);
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: "Something went wrong contacting the server." },
+      ]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const toggleChat = () => {
+    if (showChat) {
+      setMessages([
+        {
+          role: "assistant",
+          content: "Hi, I'm Frankie! How can I help you today?",
+        },
+      ]);
+    }
+    setShowChat(!showChat);
+  };
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <div className="min-h-screen bg-orange-50 font-sans relative">
       {/* Navbar */}
@@ -47,14 +109,17 @@ export default function App() {
 
       {/* Product Grid */}
       <section className="py-10 px-6">
-        <h3 className="text-2xl text-center font-semibold text-orange-600 mb-10">
-          Best Sellers <span role="img" aria-label="shoe">👟</span>
+        <h3 className="text-2xl text-center font-semibold text-orange-600 mb-10 flex justify-center items-center gap-2">
+          <span className="animate-bounce">🔥</span>
+          Best Sellers
+          <span className="animate-bounce">🔥</span>
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {products.map((product) => (
             <div
               key={product.name}
-              className="bg-white rounded-2xl shadow-md p-4 text-center"
+              onClick={() => alert(`You selected: ${product.name}`)}
+              className="bg-white rounded-2xl shadow-md p-4 text-center cursor-pointer transform transition-transform duration-300 hover:scale-105"
             >
               <img
                 src={product.image}
@@ -69,17 +134,60 @@ export default function App() {
       </section>
 
       {/* Chat Button */}
-      <button className="fixed bottom-6 right-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-5 py-3 rounded-full shadow-lg flex items-center space-x-2 animate-chat-bounce">
+      <button
+        onClick={toggleChat}
+        className="fixed bottom-6 right-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-5 py-3 rounded-full shadow-lg flex items-center space-x-2 animate-chat-bounce"
+      >
         <img
           src="/frankie-avatar.png"
           alt="Frankie avatar"
           className="w-6 h-6 rounded-full"
         />
         <span className="flex items-center gap-1">
-          Chat with Frankie
-          <span className="animate-sparkle inline-block">✨</span>
+          Chat with Frankie <span className="animate-ping inline-block">✨</span>
         </span>
       </button>
+
+      {/* Chat Box */}
+      {showChat && (
+        <div className="fixed bottom-24 right-6 w-80 h-96 bg-white border shadow-xl rounded-2xl flex flex-col p-4 z-50 animate-fade-in">
+          <div className="flex items-center gap-2 mb-2 font-bold text-orange-600">
+            <img
+              src="/frankie-avatar.png"
+              alt="Frankie avatar"
+              className="w-6 h-6 rounded-full"
+            />
+            Frankie
+          </div>
+          <div className="flex-1 overflow-y-auto text-sm text-gray-700 space-y-2 mb-2">
+            {messages.map((msg, i) => (
+              <div
+                key={i}
+                className={`p-2 rounded-md ${
+                  msg.role === "user" ? "bg-orange-100 text-right ml-8" : "bg-gray-100 mr-8"
+                }`}
+              >
+                {msg.content}
+              </div>
+            ))}
+            {loading && (
+              <div className="p-2 bg-gray-100 mr-8 rounded-md italic text-gray-500 animate-pulse">
+                Frankie is typing...
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+          <form onSubmit={handleSubmit} className="mt-auto">
+            <input
+              type="text"
+              placeholder="Type your question..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              className="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+            />
+          </form>
+        </div>
+      )}
     </div>
   );
 }
