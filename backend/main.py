@@ -16,7 +16,7 @@ load_dotenv()
 client = OpenAI()
 
 app = FastAPI()
-
+    
 # Allow frontend dev server to access backend
 app.add_middleware(
     CORSMiddleware,
@@ -27,8 +27,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
- 
 
 # === Utility and Data Loading Functions ===
 
@@ -50,6 +48,14 @@ def load_products():
     """
     with open("data/products.json", "r") as f:
         return json.load(f)
+        
+try:
+    data = load_index()
+    products = load_products()
+except FileNotFoundError as e:
+    logger.error(f"Startup data loading failed: {e}")
+    data = {"index": None, "faqs": []}
+    products = []
 
 def embed_text(text):
     """
@@ -157,12 +163,13 @@ def needs_handoff(query: str) -> bool:
     Returns:
         bool: True if handoff is needed, else False.
     """
-    triggers = [
-        "human", "real person", "talk to someone", "speak to agent", "speak with someone",
-        "customer service", "representative", "get help", "escalate", 
-        "return", "about a return", "help with a return", "need a return", "talk to someone about a return"
+    query_lower = query.lower()
+    escalatory_triggers = [
+        "talk to someone", "speak to agent", "speak with someone",
+        "customer service", "representative", "get help", "escalate",
+        "problem with return", "return not processed", "can't return", "need help with my return"
     ]
-    return any(trigger in query.lower() for trigger in triggers)
+    return any(trigger in query_lower for trigger in escalatory_triggers)
 
 # === Handoff Messaging ===
 
@@ -444,11 +451,6 @@ def read_root():
     return {"message": "HappyFeet backend is up!"}
     
 if __name__ == "__main__":
-    try:
-        data = load_index()
-        products = load_products()
-    except FileNotFoundError as e:
-        logger.error(f"Startup data loading failed: {e}")
-        data = {"index": None, "faqs": []}
-        products = []
+    #Optional test code block
+    pass
 
