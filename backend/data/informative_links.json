@@ -1,0 +1,22 @@
+[
+  {
+    "topic": "returns",
+    "trigger_phrases": ["return", "refund", "exchange", "wrong size", "send back"],
+    "text": "To start your return journey, simply tiptoe over to our [Returns Center](https://happyfeet.com/returns) and follow the easy peasy instructions there. 🧦"
+  },
+  {
+    "topic": "shipping",
+    "trigger_phrases": ["shipping", "delivery", "when will it arrive", "how long", "tracking"],
+    "text": "Wondering when your shoes will hit the ground running? Check out our [Shipping Info](https://happyfeet.com/shipping) page for all the speedy details. 🚚"
+  },
+  {
+    "topic": "sizing",
+    "trigger_phrases": ["size", "fit", "too small", "too big", "measurement", "sizing"],
+    "text": "Need help finding the perfect fit? Our [Sizing Guide](https://happyfeet.com/sizing-guide) walks you through it step by step so your toes are never in a pinch. 📏"
+  },
+  {
+    "topic": "look book",
+    "trigger_phrases": ["style", "inspiration", "vibe", "fashion", "look book", "outfits"],
+    "text": "Looking for inspiration? Browse our [Look Book](https://happyfeet.com/lookbook) to see how HappyFeet fans are styling their kicks. 🎨"
+  }
+]

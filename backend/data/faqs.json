@@ -1,0 +1,59 @@
+[
+  {
+    "question": "How do I reset my password?",
+    "answer": "To reset your password, head to your account settings and click 'Reset Password'. You’ll get a magical reset link in your email faster than you can say 'HappyFeet'."
+  },
+  {
+    "question": "What is your return policy?",
+    "answer": "We accept returns within 30 days of purchase—as long as your shoes are still pristine and in their original packaging. Tap into our Returns Center to get started. Easy peasy!"
+  },
+  {
+    "question": "How can I contact customer support?",
+    "answer": "You can reach our friendly human team via live chat or by emailing support@happyfeet.com. We're here 7 days a week from 9am–9pm EST to get you taken care of!"
+  },
+  {
+    "question": "Where can I track my order?",
+    "answer": "Once your order ships, you'll get a tracking link via email. Or just check your 'Order History' in your account anytime for real-time updates!"
+  },
+  {
+    "question": "Do you offer international shipping?",
+    "answer": "You bet we do! We ship to over 40 countries worldwide. Shipping rates and delivery times are calculated at checkout based on where you're located."
+  },
+  {
+    "question": "Can I speak with a real person?",
+    "answer": "Absolutely! I can handle most things, but if you’d rather talk to a human, I can connect you right now or you can email support@happyfeet.com."
+  },
+  {
+    "question": "Can you help me purchase shoes?",
+    "answer": "Heck yes I can! From breezy sandals to cloud-soft sneakers, I’m here to help you pick the perfect pair. Want recs? Need sizing help? I got you!"
+  },
+  {
+    "question": "Can I place an order with you?",
+    "answer": "While I can’t take payment directly, I can guide you through the entire process and help you find exactly what you’re looking for. Ready to shop?"
+  },
+  {
+    "question": "I need help with shoe sizing",
+    "answer": "We get it—fit is everything. If you're between sizes, go with the larger one. Check out our sizing guide for more help. Want style suggestions too? Just ask!"
+  },
+  {
+    "question": "How do I change or cancel my order?",
+    "answer": "If your order hasn’t shipped yet, we can probably catch it! Head to your account and go to 'Order History', or reach out to support@happyfeet.com right away."
+  },
+  {
+    "question": "Do you recommend shoes based on personal style?",
+    "answer": "I do! Tell me about your vibe—favorite music, art, movies, even your go-to weekend plans—and I’ll suggest something with sole. (Pun intended.)"
+  },
+  {
+    "question": "What types of art or culture influence your collections?",
+    "answer": "Our shoes draw inspiration from all over—sunset hues from desert art, modernist lines, even street poetry. Want a pair that matches your favorite aesthetic? I’m on it."
+  },
+  {
+    "question": "What can you help me with?",
+    "answer": "Great question! I can help with just about anything you'd ask a real HappyFeet agent — from finding the perfect shoes, sizing advice, and style recommendations to tracking orders, starting returns, and answering policy questions. Think of me as your always-on shopping buddy! If I ever get stumped, I’ll loop in a human from our support team, no sweat."
+  }
+  ,
+  {
+    "question": "What is a conversational AI agent?",
+    "answer": "Great question! A conversational AI agent—like me—is your always-on, always-friendly digital assistant. I’m here to help you find the perfect pair of shoes, answer questions about orders or returns, and offer style suggestions based on your personal vibe. Think of me as the virtual version of a super helpful HappyFeet team member—available 24/7. And if you ever need a real human, I can loop one in faster than you can say “comfy kicks.”"
+  }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Breeze Runners",
+    "description": "Built for movement with featherlight cushioning — great for gym sessions, dog walks, or dancing down the sidewalk.",
+    "category": "athletic",
+    "tags": ["lightweight", "active", "sporty", "versatile", "responsive", "pop", "edm", "action"],
+    "link": "https://happyfeet.com/products/breeze-runners"
+  },
+  {
+    "name": "Cloud Walkers",
+    "description": "These dreamy sneakers feel like you’re walking on clouds — ideal for everyday errands or casual weekend strolls.",
+    "category": "walking",
+    "tags": ["cushioned", "casual", "neutral", "cozy", "versatile", "lofi", "romcom", "indie"],
+    "link": "https://happyfeet.com/products/cloud-walkers"
+  },
+  {
+    "name": "Sunset Sneakers",
+    "description": "Crisp, all-white sneakers with subtle sunset vibes — a clean finish for laid-back looks or bold, minimalist outfits.",
+    "category": "lifestyle",
+    "tags": ["minimalist", "trendy", "chill", "retro", "clean", "synthwave", "roadtrip", "indie"],
+    "link": "https://happyfeet.com/products/sunset-sneakers"
+  },
+  {
+    "name": "Glow Glide Slides",
+    "description": "Slides with serious sparkle. Pop these on for post-gym recovery, poolside hangs, or comfy-cozy indoor days.",
+    "category": "casual",
+    "tags": ["relaxed", "sparkly", "cozy", "fun", "recovery", "dance", "comedy"],
+    "link": "https://happyfeet.com/products/glow-glide-slides"
+  },
+  {
+    "name": "Metro Morphs",
+    "description": "Sleek urban sneakers with adaptive arch support — perfect for commuters who dress for comfort without compromising on style.",
+    "category": "urban",
+    "tags": ["sleek", "black", "modern", "arch support", "versatile", "jazz", "drama", "noir"],
+    "link": "https://happyfeet.com/products/metro-morphs"
+  },
+  {
+    "name": "Stargazer High-Tops",
+    "description": "Retro-inspired high-tops with galactic patterns and cloudfoam soles — because your vibe is out of this world.",
+    "category": "fashion",
+    "tags": ["retro", "bold", "fun", "statement", "patterned", "sci-fi", "synth", "alt-rock"],
+    "link": "https://happyfeet.com/products/stargazer-high-tops"
+  },
+  {
+    "name": "Coastline Cruisers",
+    "description": "Breezy slip-ons for beach towns and coffee runs — super breathable and always chill.",
+    "category": "lifestyle",
+    "tags": ["coastal", "relaxed", "lo-fi", "soft", "canvas", "folk", "surf", "romcom"],
+    "link": "https://happyfeet.com/products/coastline-cruisers"
+  },
+  {
+    "name": "Pulse Pace Trainers",
+    "description": "For fast feet and forward motion — ideal for tempo runs, HIIT sessions, or chasing the bus with style.",
+    "category": "training",
+    "tags": ["performance", "bounce", "durable", "intense", "structured", "rap", "sports", "adventure"],
+    "link": "https://happyfeet.com/products/pulse-pace-trainers"
+  },
+  {
+    "name": "EcoSteps Earth Runners",
+    "description": "Sustainable sneakers made from recycled materials — walk light on the planet without sacrificing comfort.",
+    "category": "eco",
+    "tags": ["sustainable", "green", "earthy", "natural", "lightweight", "indie", "acoustic", "nature", "documentary"],
+    "link": "https://happyfeet.com/products/ecosteps-earth-runners"
+  },
+  {
+    "name": "Velvet Strides",
+    "description": "Luxuriously soft slip-ons that feel like a hug for your feet — perfect for jazz nights, date nights, or self-care evenings.",
+    "category": "fashion",
+    "tags": ["soft", "luxurious", "romantic", "elegant", "cozy", "classical", "jazz", "drama", "oldies"],
+    "link": "https://happyfeet.com/products/velvet-strides"
+  }
+]
